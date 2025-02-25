@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Good Opinions - Your AI Chatbot for generating code, jokes, and more. SEO-optimized for better visibility and performance.">
+    <meta name="keywords" content="Good Opinions, AI Chatbot, Code Generator, Joke Generator, SEO-optimized, HTML, JavaScript">
+    <meta name="author" content="Your Name">
+    <title>Good Opinions - AI Chatbot</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4a148c, #7c4dff);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ffeb3b;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+
+        /* Chat Container */
+        #chat-container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Chat Box */
+        #chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Messages */
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .user {
+            background: #7c4dff;
+            align-self: flex-end;
+        }
+
+        .bot {
+            background: #4a148c;
+            align-self: flex-start;
+        }
+
+        /* Input Area */
+        #input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #user-input::placeholder {
+            color: #ccc;
+        }
+
+        #send-btn {
+            padding: 10px 20px;
+            background: #7c4dff;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #send-btn:hover {
+            background: #651fff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar Styling */
+        #chat-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat-box::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        #chat-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        #chat-box::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>Good Opinions</h1>
+        <p>Your AI Chatbot for generating code, jokes, and more!</p>
+        <div id="chat-box"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('send-btn').addEventListener('click', async () => {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === "") return;
+
+            appendMessage('user', userInput);
+            document.getElementById('user-input').value = '';
+
+            try {
+                const response = await fetch("/get-response", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ message: userInput }),
+                });
+
+                const data = await response.json();
+                if (data.response) {
+                    appendMessage('bot', data.response);
+                } else {
+                    appendMessage('bot', "Sorry, I couldn't generate a response.");
+                }
+            } catch (error) {
+                appendMessage('bot', "An error occurred. Please try again.");
+            }
+        });
+
+        function appendMessage(sender, message) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
+python app.py
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+```"
